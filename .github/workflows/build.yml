@@ -1,20 +1,8 @@
-compile-matrix:
-  if: ${{ !cancelled() }}
-  runs-on: ubuntu-latest
-  needs: [core-coverage, board-changes, nightly]
-  outputs:
-    include-list: ${{ steps.compile-list.outputs.result }}
-  steps:
-    - name: Join build lists
-      uses: actions/github-script@v7
-      id: compile-list
-      with:
-        script: |
-          return [
-            {
-              board: "cyber60_rev_e",
-              shieldArgs: JSON.stringify([{}])
-            }
-          ];
-
+on:
+  workflow_dispatch:
+    inputs:
+      board:
+        description: "Board to build"
+        required: true
+        default: "cyber60_rev_e"
 
